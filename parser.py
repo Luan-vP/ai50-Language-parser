@@ -95,16 +95,30 @@ def np_chunk(tree):
     """
     np_chunks = []
 
-    print(tree)
-    print("----------")
-    for subtree in tree:
-        # import pdb; pdb.set_trace()
+    for subtree in tree.subtrees(lambda t: t.label() == "NP"):
+
         print(subtree)
-        print(type(subtree)==nltk.tree.Tree)
-        print(subtree.label())
-        for np in find_nps(subtree):
-            np_chunks.append(np)
-        print(np_chunks)
+
+        if len(list(subtree.subtrees(lambda t: t.label() == "NP"))) == 1:
+            np_chunks.append(subtree)
+
+    # print("----------")
+    # for subtree in tree:
+    #     # import pdb; pdb.set_trace()
+    #     print(subtree)
+    #     print(type(subtree)==nltk.tree.Tree)
+    #     print(subtree.label())
+    #     for np in find_nps(subtree):
+    #         np_chunks.append(np)
+    #     print(np_chunks)
+    #     print(len(np_chunks))
+    #     # Debug
+    #     for chunk in np_chunks:
+    #         print(chunk)
+    #         print(type(chunk))
+
+    # Now to whittle them down
+
     return np_chunks
 
 def find_nps(subtree):
