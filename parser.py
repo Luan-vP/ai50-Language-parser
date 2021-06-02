@@ -122,8 +122,9 @@ def find_nps(subtree):
         try:
             for np in find_nps(branch):
                 nps.append(np) 
-        except:
-            pass
+        except TypeError:
+            # No nps found in branch
+            continue
 
     return nps
 
