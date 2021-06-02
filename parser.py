@@ -40,7 +40,6 @@ def main():
 
     # Convert input into list of words
     s = preprocess(s)
-    print(s)
 
     # Attempt to parse sentence
     try:
@@ -96,51 +95,12 @@ def np_chunk(tree):
     np_chunks = []
 
     for subtree in tree.subtrees(lambda t: t.label() == "NP"):
-
-        print(subtree)
-
         if len(list(subtree.subtrees(lambda t: t.label() == "NP"))) == 1:
+            # No smaller np chunks in subtree
             np_chunks.append(subtree)
-
-    # print("----------")
-    # for subtree in tree:
-    #     # import pdb; pdb.set_trace()
-    #     print(subtree)
-    #     print(type(subtree)==nltk.tree.Tree)
-    #     print(subtree.label())
-    #     for np in find_nps(subtree):
-    #         np_chunks.append(np)
-    #     print(np_chunks)
-    #     print(len(np_chunks))
-    #     # Debug
-    #     for chunk in np_chunks:
-    #         print(chunk)
-    #         print(type(chunk))
-
-    # Now to whittle them down
 
     return np_chunks
 
-def find_nps(subtree):
-
-    if type(subtree) != nltk.tree.Tree:
-        # too deep
-        return
-
-    nps = []
-    # if NP, return or check further
-    if subtree.label() == "NP":
-        nps.append(subtree)
-
-    for branch in subtree:
-        try:
-            for np in find_nps(branch):
-                nps.append(np) 
-        except TypeError:
-            # No nps found in branch
-            continue
-
-    return nps
 
 if __name__ == "__main__":
     main()
